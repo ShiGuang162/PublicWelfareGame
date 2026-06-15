@@ -17,7 +17,7 @@ const DEFAULT_DATA = {
 
 function loadData() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = window.localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
       return { ...DEFAULT_DATA, ...parsed };
@@ -30,7 +30,7 @@ function loadData() {
 
 function saveData(data) {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     return true;
   } catch (e) {
     console.warn('Storage save failed:', e);

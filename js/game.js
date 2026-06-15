@@ -91,6 +91,7 @@ class GameEngine {
   }
 
   finishLevel() {
+    if (this.state === 'finished') return null; // 防重入
     this.state = 'finished';
     this._stopTimer();
     const timeBonus = this.timeLeft * GAME_CONFIG.timeBonusMultiplier;
@@ -100,7 +101,7 @@ class GameEngine {
     const rate = this.correctCount / this.questions.length;
     const passed = rate >= 0.6 && this.timeLeft > 0;
 
-    const record = Storage.recordLevelScore(
+    const record = window.Storage.recordLevelScore(
       this.levelId,
       finalScore,
       this.correctCount,
@@ -108,7 +109,7 @@ class GameEngine {
       this.maxCombo
     );
 
-    const flowerResult = passed ? Storage.addFlowers(finalScore) : { upgraded: false };
+    const flowerResult = passed ? window.Storage.addFlowers(finalScore) : { upgraded: false };
 
     const summary = {
       levelId: this.levelId,
@@ -125,7 +126,7 @@ class GameEngine {
       upgraded: flowerResult.upgraded,
       newTier: flowerResult.newTier,
       answers: this.answers,
-      totalFlowers: flowerResult.data?.flowers || Storage.loadData().flowers
+      totalFlowers: flowerResult.data?.flowers || window.Storage.loadData().flowers
     };
 
     if (this.onLevelEnd) this.onLevelEnd(summary);

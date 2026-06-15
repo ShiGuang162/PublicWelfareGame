@@ -237,6 +237,8 @@ const App = {
     options.forEach(b => b.disabled = true);
 
     const result = this.game.answer(index);
+    if (!result) return; // 游戏已结束（如时间耗尽），忽略此次点击
+
     const q = this.game.questions[this.game.currentIndex - 1];
 
     if (result.isCorrect) {
@@ -277,8 +279,14 @@ const App = {
   },
 
   handleLevelEnd(summary) {
-    this.renderResult(summary);
-    this.showSection('result');
+    try {
+      this.renderResult(summary);
+      this.showSection('result');
+    } catch (e) {
+      console.error('结果页渲染异常:', e);
+      // 即使渲染失败也强制跳转到结果页
+      this.showSection('result');
+    }
   },
 
   renderResult(summary) {
