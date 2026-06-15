@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>急救先锋 - 小红花公益急救闯关</title>
+  <meta name="description" content="用游戏传递公益力量，通过趣味问答掌握急救知识，守护生命安全">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ========== 首页 ========== -->
+  <section id="home" class="section">
+    <div class="container">
+      <div class="home-header">
+        <div class="home-logo">🌸</div>
+        <h1 class="home-title">急救先锋</h1>
+        <p class="home-subtitle">小红花公益急救闯关 · 守护生命 从游戏开始</p>
+        <div class="nickname-display" id="home-nickname">匿名急救员</div>
+      </div>
+
+      <div class="nickname-box">
+        <input type="text" id="nickname-input" placeholder="输入昵称开始游戏" maxlength="12">
+        <button class="btn btn-small btn-secondary" id="btn-nickname">保存</button>
+      </div>
+
+      <div class="home-stats">
+        <div class="stat-box">
+          <div class="stat-label">当前段位</div>
+          <div class="stat-value" id="home-tier">🥉 青铜急救员</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">小红花</div>
+          <div class="stat-value flowers" id="home-flowers">0</div>
+        </div>
+      </div>
+
+      <div class="tier-progress">
+        <div class="tier-progress-label" id="tier-progress-label">距离「白银急救员」还需 100 朵小红花</div>
+        <div class="tier-progress-track">
+          <div class="tier-progress-bar" id="tier-progress-bar" style="width:0%"></div>
+        </div>
+      </div>
+
+      <div class="home-actions">
+        <button class="btn btn-primary" id="btn-start">🎮 开始闯关</button>
+        <button class="btn btn-secondary" id="btn-leaderboard">🏆 排行榜</button>
+        <button class="btn btn-secondary" id="btn-handbook">📚 急救手册</button>
+      </div>
+
+      <div class="tip-box">
+        <strong>💡 急救小贴士：</strong>
+        <span id="tip-text">心脏骤停后4分钟内开始CPR，存活率可提高2-3倍！</span>
+      </div>
+
+      <p class="home-subtitle" id="home-progress">已通关 0/8 关</p>
+    </div>
+  </section>
+
+  <!-- ========== 选关页 ========== -->
+  <section id="levels" class="section">
+    <div class="container">
+      <div class="levels-header">
+        <h2 class="levels-title">🗺️ 选择关卡</h2>
+        <button class="btn btn-small btn-secondary" id="btn-levels-back">返回</button>
+      </div>
+      <div class="levels-grid" id="levels-grid">
+        <!-- JS 动态生成 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 答题页 ========== -->
+  <section id="quiz" class="section">
+    <div class="container">
+      <div class="quiz-header">
+        <div class="quiz-title" id="quiz-level-title">第1关：心肺复苏</div>
+        <div class="quiz-meta">
+          <span id="quiz-progress">1/5</span>
+          <span class="timer" id="quiz-timer">60</span>
+        </div>
+      </div>
+
+      <div class="progress-track">
+        <div class="progress-bar" id="quiz-progress-bar" style="width:0%"></div>
+      </div>
+
+      <div class="quiz-question" id="quiz-question">
+        <!-- 题目内容 -->
+      </div>
+
+      <div class="quiz-options" id="quiz-options">
+        <!-- 选项按钮 -->
+      </div>
+
+      <div class="quiz-feedback" id="quiz-feedback">
+        <!-- 答题反馈 -->
+      </div>
+
+      <div class="quiz-actions">
+        <button class="btn btn-small btn-secondary" id="btn-quit">退出</button>
+        <button id="btn-next">下一题</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 结算页 ========== -->
+  <section id="result" class="section">
+    <div class="container">
+      <h2 class="result-title" id="result-title">🎉 闯关成功！</h2>
+      <div class="result-level" id="result-level">❤️ 心肺复苏</div>
+
+      <div class="result-stars" id="result-stars">
+        <span class="star filled">★</span><span class="star filled">★</span><span class="star">★</span>
+      </div>
+
+      <div class="result-stats">
+        <div class="result-stat">
+          <div class="result-stat-label">本关得分</div>
+          <div class="result-stat-value" id="result-score">120</div>
+        </div>
+        <div class="result-stat">
+          <div class="result-stat-label">正确率</div>
+          <div class="result-stat-value" id="result-correct">4/5</div>
+        </div>
+        <div class="result-stat">
+          <div class="result-stat-label">用时</div>
+          <div class="result-stat-value" id="result-time">35秒</div>
+        </div>
+        <div class="result-stat">
+          <div class="result-stat-label">最高连击</div>
+          <div class="result-stat-value" id="result-combo">3</div>
+        </div>
+      </div>
+
+      <div class="result-tier-box">
+        <div>当前段位：<span id="result-tier" style="font-weight:700">🥉 青铜急救员</span></div>
+        <div>累计小红花：<span id="result-flowers" style="font-weight:700;color:var(--primary)">0</span></div>
+      </div>
+
+      <div id="result-upgrade" class="result-upgrade"></div>
+
+      <div class="result-actions">
+        <button class="btn btn-primary" id="btn-result-next">下一关</button>
+        <button class="btn btn-secondary" id="btn-result-review">🔍 错题回顾</button>
+        <button class="btn btn-secondary" id="btn-result-leaderboard">🏆 排行榜</button>
+        <button class="btn btn-secondary" id="btn-result-home">返回首页</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 排行榜 ========== -->
+  <section id="leaderboard" class="section">
+    <div class="container">
+      <div class="leaderboard-header">
+        <h2 class="leaderboard-title">🏆 急救先锋榜</h2>
+        <button class="btn btn-small btn-secondary" id="btn-leaderboard-back">返回</button>
+      </div>
+
+      <div class="leaderboard-list" id="leaderboard-list">
+        <!-- JS 动态生成 -->
+      </div>
+
+      <div class="leaderboard-submit">
+        <button class="btn btn-primary" id="btn-submit-score">提交我的成绩</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 知识手册 ========== -->
+  <section id="handbook" class="section">
+    <div class="container">
+      <div class="handbook-header-bar">
+        <h2 class="handbook-title">📚 急救知识手册</h2>
+        <button class="btn btn-small btn-secondary" id="btn-handbook-back">返回</button>
+      </div>
+      <input type="text" class="handbook-search" id="handbook-search" placeholder="🔍 搜索急救知识...">
+      <div class="handbook-list" id="handbook-list">
+        <!-- JS 动态生成 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 弹窗：错题回顾 ========== -->
+  <div class="modal-overlay" id="review-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title">🔍 错题回顾</span>
+        <button class="modal-close" id="btn-review-close">&times;</button>
+      </div>
+      <div class="modal-body" id="review-list">
+        <!-- JS 动态生成 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- JS 文件 -->
+  <script src="js/data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      App.init();
+    });
+  </script>
+</body>
+</html>
