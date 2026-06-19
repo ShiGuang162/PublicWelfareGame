@@ -265,11 +265,38 @@ const App = {
     nextBtn.style.display = 'block';
     nextBtn.textContent = result.isFinished ? '查看结果' : '下一题';
     nextBtn.onclick = () => {
-      if (result.isFinished) {
-        this.game.finishLevel();
-      } else {
-        const nextQ = this.game.getCurrentQuestion();
-        this.renderQuiz(nextQ);
+      try {
+        if (result.isFinished) {
+          const summary = this.game.finishLevel();
+          if (!summary) {
+            // 如果游戏已结束（防重入），手动构建结果并显示
+            console.warn('finishLevel 返回 null，手动显示结果');
+            const fallback = {
+              levelId: this.game.levelId,
+              score: this.game.score,
+              correctCount: this.game.correctCount,
+              wrongCount: this.game.wrongCount,
+              totalQuestions: this.game.questions.length,
+              timeLeft: this.game.timeLeft,
+              maxCombo: this.game.maxCombo,
+              rate: this.game.correctCount / this.game.questions.length,
+              passed: false,
+              stars: 0,
+              isNewRecord: false,
+              upgraded: false,
+              newTier: null,
+              answers: this.game.answers,
+              totalFlowers: Storage.loadData().flowers
+            };
+            this.handleLevelEnd(fallback);
+          }
+        } else {
+          const nextQ = this.game.getCurrentQuestion();
+          this.renderQuiz(nextQ);
+        }
+      } catch (e) {
+        console.error('点击下一题/查看结果按钮出错:', e);
+        alert('操作出错，请刷新页面重试');
       }
     };
   },
@@ -279,6 +306,7 @@ const App = {
   },
 
   handleLevelEnd(summary) {
+    console.log('handleLevelEnd called', JSON.stringify(summary));
     try {
       this.renderResult(summary);
       this.showSection('result');
