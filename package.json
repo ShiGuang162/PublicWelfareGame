@@ -1,0 +1,27 @@
+{
+  "name": "publicwelfaregame",
+  "version": "1.0.0",
+  "description": "> **腾讯云黑客松 · 用游戏传递公益力量**   > 应急急救方向 · 知识问答闯关 · H5 跨平台",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShiGuang162/PublicWelfareGame.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ShiGuang162/PublicWelfareGame/issues"
+  },
+  "homepage": "https://github.com/ShiGuang162/PublicWelfareGame#readme",
+  "dependencies": {
+    "canvas": "^3.2.3"
+  }
+}
